@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <p class="kicker">Token Radar · radar-2</p>
+    <h1>Which protocol launches the next token worth farming?</h1>
+    <p class="lede">Every protocol below records no token yet. Each is ranked by an implied value built only from the sealed snapshot — its TVL, its seven-day growth, how long it has run, how many chains it reaches, and how often its category has launched before. Live-token protocols are listed separately and never ranked.</p>
+  </div>
+</header>
+<main class="wrap">
+  <section id="stats" class="stats" aria-label="Snapshot summary"></section>
+  <section class="model" aria-label="The value model">
+    <h2>How the implied value is built</h2>
+    <p class="formula" id="formula"></p>
+    <ul class="model-notes">
+      <li><strong>Growth</strong> — the TVL change over seven days, clamped to −60%…+120%; a missing figure counts as 0%.</li>
+      <li><strong>Maturity</strong> — the longer a protocol has run with no token, the more its record counts; age is counted from its first tracked day to the snapshot date, and an unknown age counts as 365 days.</li>
+      <li><strong>Chains</strong> — each extra chain adds 4%, up to five extra chains; a protocol live in more places reaches more wallets.</li>
+      <li><strong>Precedent</strong> — the share of protocols in the same category in this very snapshot that already record a token; categories that have launched before score a little higher.</li>
+    </ul>
+    <p class="disclaimer">The implied value is this entry's own claim from the snapshot's figures. It is not a prediction that a token will be issued, or when, and it is not financial advice.</p>
+  </section>
+  <section class="controls" aria-label="Board controls">
+    <div class="tabs" role="tablist">
+      <button type="button" id="tab-board" class="tab active" role="tab" aria-selected="true">Pre-token board</button>
+      <button type="button" id="tab-live" class="tab" role="tab" aria-selected="false">Already has a token</button>
+    </div>
+    <div class="filters">
+      <label>Search <input type="search" id="q" placeholder="Name or slug" autocomplete="off"></label>
+      <label>Category <select id="category"><option value="all">All categories</option></select></label>
+      <label>Chain <select id="chain"><option value="all">All chains</option></select></label>
+      <label class="check"><input type="checkbox" id="watchlist-only"> Watchlist only</label>
+      <label>Sort <select id="sort">
+        <option value="rank">Rank</option>
+        <option value="implied">Implied value</option>
+        <option value="tvl">TVL</option>
+        <option value="growth">7-day change</option>
+        <option value="age">Age</option>
+        <option value="name">Name</option>
+      </select></label>
+    </div>
+  </section>
+  <section id="detail" class="detail" hidden aria-label="Protocol detail"></section>
+  <section id="board-wrap" aria-label="Ranked board">
+    <p class="count" id="count"></p>
+    <table class="board" id="board">
+      <thead>
+        <tr>
+          <th data-sort="rank">Rank</th>
+          <th data-sort="name">Protocol</th>
+          <th data-sort="category">Category</th>
+          <th>Chains</th>
+          <th data-sort="tvl">TVL</th>
+          <th data-sort="growth">7d</th>
+          <th data-sort="age">Age</th>
+          <th data-sort="implied">Implied value</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </section>
+  <section id="live-wrap" hidden aria-label="Live-token protocols">
+    <p class="count" id="live-count"></p>
+    <table class="board live" id="live">
+      <thead>
+        <tr>
+          <th>Protocol</th>
+          <th>Category</th>
+          <th>Chains</th>
+          <th>TVL</th>
+          <th>Market cap</th>
+          <th>7d</th>
+        </tr>
+      </thead>
+      <tbody id="live-rows"></tbody>
+    </table>
+    <p class="note">These protocols already record a token, so the market prices them — the model does not. They are shown for comparison only and never enter the ranked board.</p>
+  </section>
+  <footer class="foot">
+    <p>Snapshot: 758 protocols at or above $5M TVL, fetched from DefiLlama on 2026-11-14. Watchlist: 40 protocols at or above $50M TVL with no token recorded. The board adds the strongest pre-token protocols below the floor, ranked by the same model.</p>
+  </footer>
+</main>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
